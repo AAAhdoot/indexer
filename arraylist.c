@@ -2,19 +2,20 @@
 
 #include "arraylist.h"
 
-void initList(arraylist* list){
+void initList(EList* list){
   list->size =0;
-  list->data = NULL;
+  list->entrylist = NULL;
+  list->item_count=0;
 }
 
-void setListSize(arraylist* list, int size){
+void setListSize(EList* list, int size){
   list->size = size; 
-  list->data=malloc(size*sizeof(char*));
+  list->entrylist=malloc(size*sizeof(Entry*));
 }
 
-char* getListItem(arraylist* list, int index){
+char* getListItem(EList* list, int index){
   if(index<list->size){
-    return list->data[index];
+    return (list->entrylist[index])->word;
   }
   else{
     printf("Error: Attempting to access array out-of-bounds\n");
@@ -22,18 +23,21 @@ char* getListItem(arraylist* list, int index){
   }
 }
 
-void setListItem(arraylist list, int index, char* word){
+void setListItem(EList list, int index, char* word){
   int len = strlen(word);
-  list.data[index]=malloc((len+1)*sizeof(char*));
-  list.data[index]=word;
+  list.entrylist[index]=malloc(1*sizeof(Entry));
+
+  (list.entrylist[index])->word=malloc((len+1)*sizeof(char*));
+
+  strcpy((list.entrylist[index]->word),word);
 }
 
-void searchList(arraylist* list, char* word){
+void searchList(EList* list, char* word){
   printf("search for: %s\n",word);
   int i=0;
   for(; i < list->size; i++){
     //only run strcmp on non-NULL entries or else segfaults
-   if(list->data[i]!=NULL && strcmp(word,list->data[i])==0){
+    if(list->entrylist[i]!=NULL && strcmp(word,(list->entrylist[i])->word)==0){
       printf("Already in list!\n");
       return;
     }
@@ -42,17 +46,18 @@ void searchList(arraylist* list, char* word){
   return;
 }
 
-void printList(arraylist* list){
+void printList(EList* list){
   int i= 0;
-  while(list->data[i]!=NULL){
-    printf("list->data[%d]: %s\n", i,list->data[i]);
+  while(list->entrylist[i]!=NULL){
+    printf("list->entrylist[%d]->word: %s\n", i,(list->entrylist[i])->word);
     i++;
   }
 }
 
+
 int main(int argc, char** argv){
-  arraylist list;
-  char* word = "DUDE";
+  EList list;
+  char* word = "ADELE";
   int entry_count=0;
   initList(&list);
   //  char* word = argv[1];
@@ -67,8 +72,9 @@ int main(int argc, char** argv){
     if(entry_count==list.size){
       printf("MAX CAPACITY\n");
     }
-  //searchList(&list, "Word");
+    //searchList(&list, "Word");
   }
+  searchList(&list,"Word");
   printList(&list);
   return 0;
 }
