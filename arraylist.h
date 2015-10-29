@@ -7,8 +7,10 @@
 
 struct arraylist_{
   int size;
+  int item_count;
   char** data;
 };
+
 typedef struct arraylist_ arraylist;
 
 

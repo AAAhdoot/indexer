@@ -50,20 +50,23 @@ void printList(arraylist* list){
   }
 }
 
-int main(){
+int main(int argc, char** argv){
   arraylist list;
   char* word = "DUDE";
   int entry_count=0;
   initList(&list);
+  //  char* word = argv[1];
 
-
-  setListSize(&list,20);
+  setListSize(&list,10);
   printf("list->size:%d\n", list.size);
 
-  while(entry_count<10){
+  while(entry_count<list.size){
     setListItem(list,entry_count,word);
     // printf("list.data[%d]: %s\n", entry_count, list.data[0]);
     entry_count++;
+    if(entry_count==list.size){
+      printf("MAX CAPACITY\n");
+    }
   //searchList(&list, "Word");
   }
   printList(&list);
