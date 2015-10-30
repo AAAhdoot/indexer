@@ -8,8 +8,9 @@
 typedef char* String;
 
 typedef struct Occurrence{
-   int freq;
-   String filename;
+  int freq;
+  String filename;
+ struct  Occurrence* next;
  }Occurrence;
 
 typedef struct OccList{
@@ -17,7 +18,7 @@ typedef struct OccList{
 }OccList;
 
 typedef struct Entry{
-  OccList* list;
+  OccList* sl;
   char* word;
 }Entry;
 
