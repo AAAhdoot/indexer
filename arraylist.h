@@ -5,11 +5,35 @@
 #include <string.h>
 //typedef char* word;
 
-struct arraylist_{
-  int size;
-  char** data;
-};
-typedef struct arraylist_ arraylist;
+typedef char* String;
 
+typedef struct Occurrence{
+  int freq;
+  String filename;
+ struct  Occurrence* next;
+ }Occurrence;
+
+typedef struct OccList{
+  Occurrence* head;
+}OccList;
+
+typedef struct Entry{
+  OccList* sl;
+  char* word;
+}Entry;
+
+typedef struct EList{
+  int size;
+  int item_count;
+  Entry** entrylist;
+}EList;
+
+typedef struct arraylist_{
+  int size;
+  int item_count;
+  char** data;
+}arraylist;
+
+//typedef struct arraylist_ arraylist;
 
 #endif

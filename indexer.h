@@ -13,13 +13,6 @@ typedef char* String;
 typedef struct dirent* EntryPtr;
 typedef DIR* Dirp;
 
- typedef struct Occurrence{
- 	int freq;
- 	String filename;
- }Occurrence;
-
-
-
 
 
 
