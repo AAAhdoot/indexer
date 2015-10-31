@@ -25,7 +25,8 @@ typedef struct Entry{
 typedef struct EList{
   int size;
   int item_count;
-  Entry** entrylist;
+  //Entry** entrylist;
+  Entry* entrylist;
 }EList;
 
 typedef struct arraylist_{
