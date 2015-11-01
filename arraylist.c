@@ -78,11 +78,28 @@ void printList(EList* list){
     printf("No words in list\n");
     return;
   }
-  while(list->entrylist[i].word!=NULL){
-    printf("list.entrylist[%d].word: %s\n", i,(list->entrylist[i]).word);
+  while(i<list->size){
+    if(list->entrylist[i].word!=NULL){
+    printf("list->entrylist[%d].word: %s\n", i,(list->entrylist[i]).word);
+    }
     i++;
   }
 }
+
+void resize(EList* list, int new_size){
+  list->size=new_size;
+  printf("Resizing...\n");
+  // list->entrylist=realloc(list->entrylist,20*sizeof(Entry));
+  Entry* temp = realloc(list->entrylist,new_size*sizeof(Entry));
+ 
+  if (temp==NULL){
+    printf("ERROR: OUT OF MEMORY\n");
+    return ;
+  }
+  list->entrylist=temp;
+ 
+  }
+
 
 
 //Sorted List Functions
@@ -107,20 +124,6 @@ void addToSL(EList* list, int index, const char* filename, int freq){
     }
   }
 }
-
-void resize(EList* list, int new_size){
-  list->size=new_size;
-  printf("Resizing...\n");
-  // list->entrylist=realloc(list->entrylist,20*sizeof(Entry));
-  Entry* temp = realloc(list->entrylist,new_size*sizeof(Entry));
-  printf("WHAT\n");
-  if (temp==NULL){
-    printf("ERROR: OUT OF MEMORY\n");
-    return ;
-  }
-  list->entrylist=temp;
-  //  printf("WHAT\n");
-  }
 
 void printSL(EList list, int index){
   Occurrence* temp;
@@ -167,7 +170,7 @@ void freeEL(EList list){
 }
 */
 
-int main(int argc, char** argv){
+/*int main(int argc, char** argv){
    EList list;
   char* word = "ADELE";
   char* hello= "hello";
@@ -187,8 +190,9 @@ int main(int argc, char** argv){
     }
   }
   list.item_count = entry_count;
-  //  printList(&list);  
+
   
+
   insertListItem(&list,10,"rain");
   
   searchList(list,"Word");
@@ -203,22 +207,13 @@ int main(int argc, char** argv){
   printSL(list,0);
   printSL(list,1);
   
-  /*Entry* temp = realloc(list.entrylist,20*sizeof(Entry));
-  if (temp==NULL){
-    printf("ERROR: OUT OF MEMORY\n");
-    return 0;
-    }
-  list.entrylist=temp;
-  list.size = 20;
-  */
-  resize(&list,20);
+  resize(&list,40);
   insertListItem(&list,10,"red");
-  insertListItem(&list,11,"blue");
-  printf("%s\n",list.entrylist[1].word);
-  printf("size: %d\n", list.size);  
+  insertListItem(&list,38,"blue");
+  
   printList(&list);
   printf("DONE!\n");
-   // freeEL(list);
+*/
   
   //TODO: Resize/realloc function, add filename to Occurrence struct
  
@@ -230,5 +225,5 @@ int main(int argc, char** argv){
   printf("%d\n",list.size);
   */
 
-  return 0;
-}
+//  return 0;
+//}

@@ -1,5 +1,5 @@
 #include "tokenizer.h"
-
+#include "arraylist.c"
 TokenizerT *TKCreate( String ts ) {
     TokenizerT *tk;
     tk =(TokenizerT*)malloc(sizeof(TokenizerT));
@@ -70,26 +70,38 @@ void tokenization(String pathname){
     int i;
     String ts;
     FILE *fp;
+    EList list;
+    int entry_count;
+    initList(&list);
+    setListSize(&list, 50);
+
     //printf("hello 2\n");
     //some array list should be initialized here
+ 
+   //Loop: if entry_count == list.size
+    //then at MAX, call resize
+
     ts= (String)malloc(230*sizeof(char));
     fp = fopen(pathname,"r");
     //if(!fp) printf("NULLLLLLL FPPPP\n");
     while((ts = fgets(ts,230,fp))!=NULL){
         TokenizerT *tk = TKCreate(ts);
+	//String return?
+	//insertListItem(&list,entry_count,TKGetNextToken(tk));
         TKGetNextToken(tk);
         TKDestroy(tk);
     }
+    //printList(&list);
     fclose(fp);
     return;
 }
 
-int main(int argc, char** argv){
-    //printf("%s\n",argv[1]);
+/*int main(int argc, char** argv){
+
     tokenization(argv[1]);
-    //printf("hello\n");
+
     return 0;
-}
+}*/
 
 
 
