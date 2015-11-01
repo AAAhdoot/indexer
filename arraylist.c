@@ -4,6 +4,7 @@
 
 //initialize the list of entries i.e. our recorded words
 void initList(EList* list){
+  list=malloc(1*sizeof(EList));
   list->size =0;
   list->entrylist = NULL;
   list->item_count=0;
@@ -12,11 +13,16 @@ void initList(EList* list){
 //set the size of the list of entries
 void setListSize(EList* list, int size){
   list->size = size; 
-  list->entrylist=malloc(size*sizeof(Entry*));
+  Entry* e = malloc(size*sizeof(Entry));
+    list->entrylist=e;
+  //  list->entrylist=malloc(size*sizeof(Entry*));
   int i=0;
   for(;i<list->size;i++){
+    //list->entrylist[i]=NULL;
+    // list->entrylist[i]=malloc(1*sizeof(Entry));
     list->entrylist[i].word=NULL;
     }
+  //list->entrylist=e;
 }
 
 //get a word/entry at a specific index
@@ -32,6 +38,7 @@ char* getListItem(EList list, int index){
 
 //insert an item into the list at a specific index
 int insertListItem(EList* list, int index, char* word){
+  printf("Size before insert: %d\n", list->size);
   if(index<list->size){
     int len = strlen(word);
     //list->entrylist[index]=malloc(1*sizeof(Entry));
@@ -64,14 +71,15 @@ void searchList(EList list, char* word){
 }
 
 //print the words in the list
-void printList(EList list){
+void printList(EList* list){
+  printf("Printing...\n");
   int i= 0;
-  if(list.entrylist==NULL){
+  if(list->entrylist==NULL){
     printf("No words in list\n");
     return;
   }
-  while(list.entrylist[i].word!=NULL){
-    printf("list.entrylist[%d].word: %s\n", i,(list.entrylist[i]).word);
+  while(list->entrylist[i].word!=NULL){
+    printf("list.entrylist[%d].word: %s\n", i,(list->entrylist[i]).word);
     i++;
   }
 }
@@ -100,17 +108,19 @@ void addToSL(EList* list, int index, const char* filename, int freq){
   }
 }
 
-/*void resizeEL(EList list, int new_size){
-
-   Entry* temp = realloc(list.entrylist,20*sizeof(Entry));
+void resize(EList* list, int new_size){
+  list->size=new_size;
+  printf("Resizing...\n");
+  // list->entrylist=realloc(list->entrylist,20*sizeof(Entry));
+  Entry* temp = realloc(list->entrylist,new_size*sizeof(Entry));
+  printf("WHAT\n");
   if (temp==NULL){
     printf("ERROR: OUT OF MEMORY\n");
     return ;
   }
-  list.entrylist=temp;
-  list.size = 20;
-  
-  }*/
+  list->entrylist=temp;
+  //  printf("WHAT\n");
+  }
 
 void printSL(EList list, int index){
   Occurrence* temp;
@@ -158,12 +168,11 @@ void freeEL(EList list){
 */
 
 int main(int argc, char** argv){
-  EList list;
+   EList list;
   char* word = "ADELE";
   char* hello= "hello";
   int entry_count=0;
   initList(&list);
-  //  char* word = argv[1];
 
   setListSize(&list,10);
   printf("list.size:%d\n", list.size);
@@ -174,17 +183,16 @@ int main(int argc, char** argv){
     insertListItem(&list,entry_count,word);
     entry_count++;
     if(entry_count==list.size){
-      //  printf("MAX CAPACITY\n");
+    
     }
   }
   list.item_count = entry_count;
-  //  printf("item_count: %d\n", list.item_count);
+  //  printList(&list);  
   
   insertListItem(&list,10,"rain");
   
   searchList(list,"Word");
   
-  //printList(list);
   
   char* c = getListItem(list,0);
   printf("c: %s\n", c);
@@ -195,23 +203,32 @@ int main(int argc, char** argv){
   printSL(list,0);
   printSL(list,1);
   
-  EList* temp = realloc(&list,20*sizeof(Entry*));
+  /*Entry* temp = realloc(list.entrylist,20*sizeof(Entry));
   if (temp==NULL){
     printf("ERROR: OUT OF MEMORY\n");
     return 0;
-  }
-  list=*temp;
+    }
+  list.entrylist=temp;
   list.size = 20;
-  
-  //resizeEL(list,20);
+  */
+  resize(&list,20);
   insertListItem(&list,10,"red");
   insertListItem(&list,11,"blue");
-  printf("%s\n",list.entrylist[10].word);
+  printf("%s\n",list.entrylist[1].word);
   printf("size: %d\n", list.size);  
-  printList(list);
-  //  freeEL(list);
-
+  printList(&list);
+  printf("DONE!\n");
+   // freeEL(list);
+  
   //TODO: Resize/realloc function, add filename to Occurrence struct
+ 
+  //This works?
+  /*  EList list;
+  setListSize(&list,10);
+  printf("%d\n",list.size);
+  resize(&list,30);
+  printf("%d\n",list.size);
+  */
 
   return 0;
 }
