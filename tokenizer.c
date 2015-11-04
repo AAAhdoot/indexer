@@ -1,109 +1,76 @@
 #include "tokenizer.h"
-#include "arraylist.c"
-TokenizerT *TKCreate( String ts ) {
-    TokenizerT *tk;
-    tk =(TokenizerT*)malloc(sizeof(TokenizerT));
-    tk->currentindex = 0;
-    //tk->currenttypeindex= -1;
-    tk->input= (String)malloc((strlen(ts)+1)*sizeof(char));
-    strncpy(tk->input,ts,strlen(ts));
-    return tk;
-}
 
 String Lower(String word){
-	long int i;
-	for(i=0;i<strlen(word);i++){
-		if(isalpha(word[i])){
-			word[i] = tolower(word[i]);
-		}
-	}
-	return word;
-}
-
-String word(TokenizerT *tk){
-    String word = (String)malloc(strlen(tk->input)*sizeof(char));
-    long int i;
-    long int j;
-    //printf("hello 4\n");
-    for(i=tk->currentindex,j=0;i<strlen(tk->input) && j<strlen(tk->input);i++,j++){
-        if(isalnum(tk->input[i])){
-            //printf("current character is %c and it's an alnum\n",tk->input[i]);
-            word[j] = tk->input[i];
-        }
-        else{
-            break;
-        }
+  long int i;
+  for(i=0;i<strlen(word);i++){
+    if(isalpha(word[i])){
+      word[i] = tolower(word[i]);
     }
-    tk->currentindex = i;
-    //printf("word currently is %s\n",word);
-    return Lower(word);
+  }
+  return word;
 }
 
-void TKDestroy( TokenizerT * tk) {
-    free(tk->input);
-    free(tk);
-    return;
-}
 
-void TKGetNextToken( TokenizerT *tk ) {
-    long int i;
-    //printf("hello 3\n");
-    for (i=tk->currentindex;i<strlen(tk->input);){
-        //printf("current character is %c\n",tk->input[i]);
-        if(isalpha(tk->input[i])){
-            //printf("it's a letter\n");
-        	printf("%s\n",word(tk));
-            i=tk->currentindex;
-        }
-        else{
-            //printf("not a letter\n");
-        	tk->currentindex+=1;
-            i++;
-        	continue;
-        }
+FILE *word(FILE *fp){
+  int i;
+  String word;
+  FILE * current;
+  FILE * start;
+  FILE *end;
+  int count;
+  char x;
+  current = fp;
+  start = fp;
+  count = 0;
+
+
+  while((x=fgetc(fp))!=EOF){
+    //printf("in word, character currently is %c and count is %d\n",x,count);
+    if(isalnum(x)!=0){
+      count++;
     }
-    return;
-}
-
-
-void tokenization(String pathname){
-    int i;
-    String ts;
-    FILE *fp;
-    EList list;
-    int entry_count;
-    initList(&list);
-    setListSize(&list, 50);
-
-    //printf("hello 2\n");
-    //some array list should be initialized here
- 
-   //Loop: if entry_count == list.size
-    //then at MAX, call resize
-
-    ts= (String)malloc(230*sizeof(char));
-    fp = fopen(pathname,"r");
-    //if(!fp) printf("NULLLLLLL FPPPP\n");
-    while((ts = fgets(ts,230,fp))!=NULL){
-        TokenizerT *tk = TKCreate(ts);
-	//String return?
-	//insertListItem(&list,entry_count,TKGetNextToken(tk));
-        TKGetNextToken(tk);
-        TKDestroy(tk);
+    else{
+      break;
     }
-    //printList(&list);
-    fclose(fp);
-    return;
+  }
+  //printf("count currently is %d\n",count);
+  fseek(fp,-count-1,SEEK_CUR);
+  //count++;
+  //fseek(current,-1,SEEK_CURR);
+  word  = (String)malloc((count+1)*sizeof(char));
+  for(i=0;i<count;i++){
+    word[i] = fgetc(fp);
+    //printf("we have just stored %c\n",word[i]);
+  }
+  word[count] = '\0';
+  //printf("word[count] is %c\n",word[count]);
+  //printf("homedawg, word currently is %s\n",word);
+  printf("%s\n",Lower(word));
+  //end = current;
+  //fseek(fp,count,SEEK_CUR);
+  free(word);
+  return fp;
 }
 
-/*int main(int argc, char** argv){
-
-    tokenization(argv[1]);
-
-    return 0;
-}*/
 
 
-
-
-
+void tokenization( String pathname) {
+  int count;
+  FILE *fp = fopen(pathname,"r");
+  FILE *start;
+  FILE *current;
+  char x;
+  current = fp;
+  while((x=fgetc(current))!=EOF){
+    if(isalpha(x)!=0){
+      //printf("%c is an alpha\n",x);
+      fseek(current,-1,SEEK_CUR);
+      current = word(current);
+    }
+    // else{
+    // current = fp;
+    // }
+  }
+  fclose(fp);
+  return;
+}

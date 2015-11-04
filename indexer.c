@@ -1,11 +1,101 @@
-//#include "arraylist.c"
-#include "tokenizer.c"
-int main(int argc, char** argv){
-  EList list;
-  if(argc<2){
-    printf("Not enough arguments\n");
-    return 0;
+#include "indexer.h"
+
+
+void enterdir(String pathname){
+  EntryPtr ptr;
+  DIR* pdir;
+  FILE * fp;
+  char x;
+  pdir = opendir(pathname);
+  if(!pdir){
+    return;
   }
-  tokenization(argv[1]);
-  return 0;
+  while((ptr = readdir(pdir))!=NULL){
+    //printf("current directory is %s\n",current );
+    if (strcmp(ptr->d_name,".") == 0 || strcmp(ptr->d_name,"..") == 0){
+      continue;
+    }
+    printf("[%s]\n",ptr->d_name);
+    printf("%zu\n",ptr->d_ino);
+    printf("%zu\n",ptr->d_off);
+    printf("%u\n",ptr->d_type);
+    if(ptr->d_type == 8){
+      chdir(pathname);
+      fp = fopen(ptr->d_name,"r");
+      if(!fp){
+	continue;
+      }
+      x = fgetc(fp);
+      if(isprint(x)==0){
+	fclose(fp);
+	continue;
+      }
+      fclose(fp);
+      tokenization(ptr->d_name);
+      chdir("..");
+    }
+    else if(ptr->d_type == 4){
+      chdir(pathname);
+      enterdir(ptr->d_name);
+      chdir("..");
+    }
+    else{
+      continue;
+    }
+  }
+  closedir(pdir);
+  return;
+
 }
+
+
+void filesave(){
+  FILE *fp;
+  fp = fopen("finale.txt","w+");
+  fprintf(fp, "{\"list\" : [\n");
+  fprintf(fp, "         {\"a\" : [ \n");
+  fprintf(fp, "                  {\"baa\" : 1},\n");
+  fprintf(fp, "                  {\"boo\" : 1}\n");
+  fprintf(fp, "         ]},\n");
+  fprintf(fp, "]}\n");
+
+
+
+
+
+
+  //   fprintf(fp, "%s %s %s %d", "We", "are", "in", 2012);
+
+}
+
+
+int main(int argc, char **argv){
+  String givendoc; 
+  String futurefile; 
+  EntryPtr ptr;
+  DIR* pdir;
+  FILE * fp;
+  FILE *write;
+  char x;
+  Elist *arraylist;
+  givendoc = argv[2];
+  futurefile = argv[1];
+  if(argc!=3 || !givendoc || !futurefile){
+    errno = EINVAL;
+    printf("%s\n", strerror( errno ));
+    exit(0);
+  }
+
+  if((!(pdir=opendir(givendoc)) && (fp=fopen(givendoc))){
+      tokenization(givendoc);
+      //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
+    }
+    else{
+      enterdir(givendoc);
+    }
+    
+
+
+
+    return 0;
+    }

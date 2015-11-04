@@ -9,20 +9,9 @@
 
 typedef char* String;
 
-struct TokenizerT_ {
-    String input;
-    int currentindex;
-    //int currenttypeindex;
-};
-typedef struct TokenizerT_ TokenizerT;
-
-
-TokenizerT *TKCreate( String ts );
-String word(TokenizerT *tk);
-void TKDestroy( TokenizerT * tk );
-void TKGetNextToken( TokenizerT *tk );
+FILE* word(FILE* fp);
 String Lower(String word);
-
+void tokenization(String pathname);
 
 
 
