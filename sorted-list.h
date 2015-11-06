@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include "arraylist.h"
 
-typedef char* String;
+//typedef char* String;
 
 typedef struct Occurrence{
   int freq;
-  String filename;
+  char* filename;
  struct  Occurrence* next;
  }Occurrence;
 
@@ -24,7 +24,13 @@ void printSL(EList list, int index);
 void freeSL(EList list, int index);
 */
 
-Occurrence* createOccurrence(String filename);
+int SLInsert(OccList* list, char* filename, char* directory);
+
+int SLRemove(OccList*  list, char* filename, int freq);
+
+Occurrence* createOccurrence(char* filename, char* directory);
+
+int search(OccList* list, char* filename);
 
 int compareOcc(Occurrence* occ1, Occurrence* occ2);
 

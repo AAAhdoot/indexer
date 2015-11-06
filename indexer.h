@@ -9,7 +9,10 @@
 #include <unistd.h>
 #include <errno.h>
 
-typedef char* String;
+#include "arraylist.h"
+#include "tokenizer.h"
+
+//typedef char* String;
 typedef struct dirent* EntryPtr;
 typedef DIR* Dirp;
 

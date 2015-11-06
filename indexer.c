@@ -1,5 +1,5 @@
 #include "indexer.h"
-
+#include "tokenizer.c"
 
 void enterdir(String pathname){
   EntryPtr ptr;
@@ -59,13 +59,6 @@ void filesave(){
   fprintf(fp, "         ]},\n");
   fprintf(fp, "]}\n");
 
-
-
-
-
-
-  //   fprintf(fp, "%s %s %s %d", "We", "are", "in", 2012);
-
 }
 
 
@@ -77,7 +70,7 @@ int main(int argc, char **argv){
   FILE * fp;
   FILE *write;
   char x;
-  Elist *arraylist;
+  EList arraylist;
   givendoc = argv[2];
   futurefile = argv[1];
   if(argc!=3 || !givendoc || !futurefile){
@@ -86,16 +79,17 @@ int main(int argc, char **argv){
     exit(0);
   }
 
-  if((!(pdir=opendir(givendoc)) && (fp=fopen(givendoc))){
-      tokenization(givendoc);
-      //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
-    }
-    else{
-      enterdir(givendoc);
-    }
+  if(  !(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
+    
+    tokenization(givendoc);
+    //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
+  }
+  else{
+    enterdir(givendoc);
+  }
     
 
 
 
-    return 0;
-    }
+  return 0;
+}

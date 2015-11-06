@@ -38,31 +38,43 @@ char* getListItem(EList list, int index){
 }
 
 //insert an item into the list
-int insertListItem(EList* list, char* filename, char* word){
+int insertListItem(EList* list, char* filename, char* word, char* directory){
   int len = strlen(word);
-  printf("%d  %d\n", list->item_count, list->size); 
-  if(list->item_count>=list->size){
-    int new_size=(2*list->size)+1;
-    printf("Out of bounds, call resize(list, %d)\n", new_size);
-    resize(list,new_size);
+  //  printf("%d  %d\n", list->item_count, list->size); 
+  int exists = existsInList(list,filename,word,directory);
+  //Particular Case: new word that does not exist in the arraylist
+  if(exists==0){
+    if(list->item_count>=list->size){
+      int new_size=(2*list->size)+1;
+      printf("Out of bounds, call resize(list, %d)\n", new_size);
+      resize(list,new_size);
+    }
+
+    (list->entrylist[ list->item_count ]).word=malloc((len+1)*sizeof(char*));
+
+    strcpy((list->entrylist[ list->item_count ].word),word);
+    //list->item_count++;
+    (list->entrylist[ list->item_count]).sl = malloc(1*sizeof(OccList));
+    (list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
+    (list->entrylist[ list->item_count]).sl->head->freq = 1;
+    (list->entrylist[ list->item_count]).sl->head->filename = malloc((strlen(filename)+1)*sizeof(char));
+    strcpy((list->entrylist[ list->item_count]).sl->head->filename,filename);
+    list->item_count++;
   }
-
-  (list->entrylist[ list->item_count ]).word=malloc((len+1)*sizeof(char*));
-
-  strcpy((list->entrylist[ list->item_count ].word),word);
-  list->item_count++;
+  
   return 1;
 
 }
 
 //look for a word in the list of words
-int existsInList(EList list, char* word){
+int existsInList(EList* list, char* filename, char* word, char* directory){
   printf("search for: %s\n",word);
   int i=0;
-  for(; i < list.size; i++){
-    if(list.entrylist[i].word!=NULL && strcmp(word,(list.entrylist[i]).word)==0){
+  for(; i < list->size; i++){
+    if(list->entrylist[i].word!=NULL && strcmp(word,(list->entrylist[i]).word)==0){
       printf("Already in list! Adding to SL[%d]\n", i);
-      // addToSL(list, i, filename);
+      SLInsert(list->entrylist[i].sl,filename, directory);
+      
       return 1;
     }
   }

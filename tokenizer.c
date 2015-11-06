@@ -7,6 +7,7 @@ String Lower(String word){
       word[i] = tolower(word[i]);
     }
   }
+  //  printf("lower?: %s\n", word);
   return word;
 }
 
@@ -48,6 +49,7 @@ FILE *word(FILE *fp){
   printf("%s\n",Lower(word));
   //end = current;
   //fseek(fp,count,SEEK_CUR);
+  //printf("word: %s\n",word);
   free(word);
   return fp;
 }
@@ -66,6 +68,7 @@ void tokenization( String pathname) {
       //printf("%c is an alpha\n",x);
       fseek(current,-1,SEEK_CUR);
       current = word(current);
+      
     }
     // else{
     // current = fp;

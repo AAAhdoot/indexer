@@ -35,9 +35,10 @@ void setListSize(EList* list, int size);
 
 char* getListItem(EList list, int index);
 
-int insertListItem(EList* list, char* filename, char* word);
+int insertListItem(EList* list, char* filename, char* word, char* directory);
 
-void searchList(EList list, char* word);
+int existsInList(EList* list, char* filename, char* word, char* directory);
+  //void searchList(EList list, char* word);
 
 void printList(EList list);
 
