@@ -8,7 +8,7 @@ int SLInsert(OccList* list, String filename, String directory){
   int compare;
   int find;
   Occurrence* curr, *previous, *addition;
-  printf("INSERTING?\n");  
+  printf("SLINSERTING?\n");  
   previous = NULL;
   if (!list || !filename){//||!directory){
     printf("P0\n");
@@ -108,18 +108,18 @@ Occurrence* createOccurrence(char* filename, String directory){
   return new;
 }
 
-int OccCompare(String filename, int freq, Occurrence * occ){
-  if(freq> occ->freq){
+int OccCompare(Occurrence * first, Occurrence * second){
+  if(first->freq> second->freq){
     return 1;
   }
-  else if(freq<occ->freq){
+  else if(first->freq < second->freq){
     return -1;
   }
   else{
-    if(strcoll(filename,occ->filename)<0){
+    if(strcmp(first->filename,second->filename)<0){
       return -1;
     }
-    else if(strcoll(filename,occ->filename)>0){
+    else if(strcmp(first->filename,second->filename)>0){
       return 1;
     }
     else{
@@ -127,6 +127,7 @@ int OccCompare(String filename, int freq, Occurrence * occ){
     }
   }
 }
+
 int search(OccList* list, String filename){
   Occurrence* curr;
   curr= list->head;
@@ -175,7 +176,7 @@ void printSL(EList list, int index){
   }
   temp = (list.entrylist[index]).sl->head;
   printf("SL for [%d] = %s\n",index,list.entrylist[index].word);
-  while(temp){
+  while(temp && temp->filename){
     printf("%s  %d\n",temp->filename,temp->freq);
     temp=temp->next;
   }

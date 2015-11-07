@@ -38,7 +38,7 @@ char* getListItem(EList list, int index){
 
 //insert an item into the list
 int insertListItem(EList* list, char* filename, char* word, char* directory){
-  printf("INSERT!!: %s \n", filename);
+  // printf("INSERT!!: %s \n", filename);
   if(!filename||!directory){
     printf("Invalid Argument\n");
     return 0;
@@ -55,6 +55,8 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
     }
     */
 //int exists = existsInList(list,filename,word,directory);
+
+//IF DOES NOT ALREADY EXIST IN LIST, make a word entry
   if(exists==0){
     /*if(list->item_count>=list->size){
       int new_size=(2*list->size)+1;
@@ -67,10 +69,16 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
     strcpy((list->entrylist[ list->item_count ].word),word);
 
     (list->entrylist[ list->item_count]).sl = malloc(1*sizeof(OccList));
-    (list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
+    // (list->entrylist[ list->item_count]).sl->head = createOccurrence("file1","directory1");
+
+     (list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
+    
     (list->entrylist[ list->item_count]).sl->head->freq = 1;
     (list->entrylist[ list->item_count]).sl->head->filename = malloc((strlen(filename)+1)*sizeof(char));
     strcpy((list->entrylist[ list->item_count]).sl->head->filename,filename);
+    
+    // SLInsert((list->entrylist[list->item_count]).sl,"file1","direct1");
+    
     list->item_count++;
   }
 if(list->item_count>=list->size){
@@ -96,7 +104,7 @@ int existsInList(EList* list, char* filename, char* word, char* directory){
     }
   }
   // printf("Not in list\n");
- 
+  // SLInsert(list->entrylist[i].sl,filename, directory);
   return 0;
 }
 

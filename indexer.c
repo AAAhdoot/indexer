@@ -49,18 +49,40 @@ void enterdir(String pathname, EList* list){
   return;
 
 }
-//Needs to be functional
-//We need to save the file path at each level for printing to file
-void filesave(char* output_file){
-  FILE *fp;
-  fp = fopen(output_file,"w+");
-  fprintf(fp, "{\"list\" : [\n");
-  fprintf(fp, "         {\"a\" : [ \n");
-  fprintf(fp, "                  {\"baa\" : 1},\n");
-  fprintf(fp, "                  {\"boo\" : 1}\n");
-  fprintf(fp, "         ]},\n");
-  fprintf(fp, "]}\n");
 
+void filesave(EList list, char* output_file){
+  FILE *fp;
+  int i;
+  int j;
+  Occurrence * curr;
+  fp = fopen(output_file,"w+");
+  //REPLACE "list" with directory name
+  fprintf(fp, "{\"list\" : [\n");
+  for(i=0;i<list.item_count;i++){
+    fprintf(fp, "         {\"%s\" : [ \n", list.entrylist[i].word); //would be the word you are talking about
+    curr = list.entrylist[i].sl->head;
+    while(curr&&curr->filename){
+      if(!(curr->next)){
+	fprintf(fp, "                  {\"%s\" : %d}\n",curr->filename, curr->freq); //filepath 1 with frequency 1
+      }
+      else{
+	fprintf(fp, "                  {\"%s\" : %d},\n",curr->filename, curr->freq); //filepath 2 with frequency 2
+      }
+      curr=curr->next;
+    }
+    if(i==list.item_count-1){
+      fprintf(fp, "         ]}\n");
+    }
+    else{
+      fprintf(fp, "         ]},\n");
+    }
+
+  }
+  fprintf(fp, "]}\n");
+  fclose(fp);
+  return;
+  // append file path to each filename?
+  //   fprintf(fp, "%s %s %s %d", "We", "are", "in", 2012);
 }
 
 int compareWords(const void* a, const void* b) {
@@ -108,7 +130,8 @@ int main(int argc, char **argv){
   printList(list);
   qsort(list.entrylist,list.item_count,sizeof(Entry),compareWords);
   printList(list);
-  // filesave(argv[1]);
+  printf("item_count: %d\n", list.item_count);
+  filesave(list, argv[1]);
 
   return 0;
 }
