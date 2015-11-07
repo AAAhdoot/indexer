@@ -7,11 +7,11 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-typedef char* String;
+//typedef char* String;
 
 FILE* word(FILE* fp);
-String Lower(String word);
-void tokenization(String pathname);
+String Lower(char* word);
+void tokenization(char* pathname);
 
 
 

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "arraylist.h"
 
-//typedef char* String;
+typedef char* String;
 
 typedef struct Occurrence{
   int freq;
