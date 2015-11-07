@@ -61,11 +61,9 @@ void filesave(EList list, char* output_file){
   for(i=0;i<list.item_count;i++){
     fprintf(fp, "         {\"%s\" : [ \n", list.entrylist[i].word); //would be the word you are talking about
     curr = (list.entrylist[i]).sl->head;
-    // printSL(list,i);
-    // printf("WHEE: %s\n", curr->filename);
+   
     while(curr&&curr->filename){
-      printf("curr->filename: %s\n", curr->filename);
-      //no more Occurrences, no comma
+       //no more Occurrences, no comma
       if(!(curr->next)){
 	fprintf(fp, "                  {\"%s\" : %d}\n",curr->filename, curr->freq); //filepath 1 with frequency 1
       }
@@ -142,7 +140,7 @@ int main(int argc, char **argv){
   for(;z<list.item_count;z++){
     printSL(list,z);
     }*/
-  printSL(list,0);
+  //printSL(list,0,argv[1]);
   filesave(list, argv[1]);
 
   return 0;

@@ -104,7 +104,8 @@ Occurrence* createOccurrence(char* filename, String directory){
   //new->filename = malloc((strlen(directory)+strlen(filename)+2)*sizeof(char));
   new->filename = malloc((strlen(filename)+1)*sizeof(char));
   // new->filename = strcat(directory, strcat("/",filename));
-  new->filename=filename;
+  strcpy(new->filename,filename);
+  // new->filename=filename;
   new->freq = 1;
   new->next=NULL;
   return new;
@@ -171,23 +172,31 @@ void addToSL(EList* list, int index, const char* filename){
   }
 }
 
-void printSL(EList list, int index){
+void printSL(EList list, int index, char* filename){
   Occurrence* temp;
+  FILE* fp;
+  fp=fopen(filename,"w+");
   if( (list.entrylist[index]).sl==NULL){
     printf("SL is empty, cannot print\n");
     return;
   }
   // temp = (list.entrylist[index]).sl->head;
+  printf("HELLO\n");
   int i =0;
   for(;i<list.item_count;i++){
     temp = (list.entrylist[i]).sl->head;
-    printf("SL for [%d] = %s\n",i,list.entrylist[i].word);
+    fprintf(fp, "SL for [%d] = %s\n",i,list.entrylist[i].word);
+    //printf("SL for [%d] = %s\n",i,list.entrylist[i].word);
     while(temp && temp->filename){
-      printf("temp: %s  %d\n",temp->filename,temp->freq);
+      // (temp->filename)[0]='w';
+       fprintf(fp,"temp: %s  %d  freq:%d\n",temp->filename,strlen(temp->filename),temp->freq);
+       
+      //printf("normal temp: %s  %d  freq:%d\n",temp->filename,strlen(temp->filename),temp->freq);
       temp=temp->next;
     }
-      
+ 
   }
+    fclose(fp);
   /*  printf("SL for [%d] = %s\n",index,list.entrylist[index].word);
   while(temp && temp->filename){
     printf("%s  %d\n",temp->filename,temp->freq);

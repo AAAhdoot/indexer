@@ -1,29 +1,29 @@
 {"list" : [
          {"apples" : [ 
-                  {"" : 2},
-                  {"ÿÿÿÿÿtxt" : 1},
+                  {"test.txt" : 2},
+                  {"name.txt" : 1},
                   {"fun.txt" : 1}
          ]},
          {"bananas" : [ 
-                  {"" : 1},
-                  {"ÿÿÿÿÿtxt" : 1},
+                  {"test.txt" : 1},
+                  {"name.txt" : 1},
                   {"fun.txt" : 1}
          ]},
          {"bears" : [ 
-                  {"" : 1},
-                  {"ÿÿÿÿÿtxt" : 1},
+                  {"test.txt" : 1},
+                  {"name.txt" : 1},
                   {"fun.txt" : 1}
          ]},
          {"cat" : [ 
-                  {"" : 1},
-                  {"ÿÿÿÿÿtxt" : 1},
+                  {"test.txt" : 1},
+                  {"name.txt" : 1},
                   {"fun.txt" : 1}
          ]},
          {"doodle" : [ 
-                  {"" : 1},
+                  {"test.txt" : 1},
                   {"fun.txt" : 3},
                   {"fun.txt" : 2},
-                  {"ÿÿÿÿÿtxt" : 1},
+                  {"name.txt" : 1},
                   {"fun.txt" : 1}
          ]}
 ]}
