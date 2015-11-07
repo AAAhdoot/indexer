@@ -10,8 +10,8 @@
 #include "arraylist.h"
 //typedef char* String;
 
-FILE* word(FILE* fp, EList* list);
-String Lower(char* word, EList* list);
+FILE* word(FILE* fp, EList* list, char* filename);
+String Lower(char* word, EList* list, char* filename);
 void tokenization(char* pathname, EList* list);
 
 

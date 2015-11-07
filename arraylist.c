@@ -38,7 +38,7 @@ char* getListItem(EList list, int index){
 
 //insert an item into the list
 int insertListItem(EList* list, char* filename, char* word, char* directory){
-  // printf("INSERT!!: %s \n", filename);
+  printf("INSERT!!: %s \n", filename);
   if(!filename||!directory){
     printf("Invalid Argument\n");
     return 0;
@@ -78,12 +78,10 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
     (list->entrylist[ list->item_count]).sl->head->filename = malloc((strlen(filename)+1)*sizeof(char));
     strcpy((list->entrylist[ list->item_count]).sl->head->filename,filename);
     */
-
-    SLInsert((list->entrylist[list->item_count]).sl,"file1","direct1");
-    if(list->item_count==10){
-      printList(*list);
-    }
-    
+    printf("PLS WORK: %s\n",filename);
+    SLInsert((list->entrylist[list->item_count]).sl, filename,"direct1");
+    // printSL(*list,0);    
+        
     list->item_count++;
   }
 if(list->item_count>=list->size){
@@ -102,9 +100,9 @@ int existsInList(EList* list, char* filename, char* word, char* directory){
   int i=0;
   for(; i < list->size; i++){
     if(list->entrylist[i].word!=NULL && strcmp(word,(list->entrylist[i]).word)==0){
-      printf("%s: Already in list! Adding to SL[%d]\n",list->entrylist[i].word, i);
+      printf("%s: Already in list! Adding to SL[%d]---%s\n",list->entrylist[i].word, i,filename);
        SLInsert(list->entrylist[i].sl,filename, directory);
-      
+       //printSL(*list,i);
       return 1;
     }
   }

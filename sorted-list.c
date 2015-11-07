@@ -8,7 +8,7 @@ int SLInsert(OccList* list, String filename, String directory){
   int compare;
   int find;
   Occurrence* curr, *previous, *addition;
-  printf("SLINSERTING?\n");  
+  printf("SLINSERTING?: %s\n",filename);  
   previous = NULL;
   if (!list || !filename){//||!directory){
     printf("P0\n");
@@ -37,9 +37,9 @@ int SLInsert(OccList* list, String filename, String directory){
     list->head = addition;
     return 1;
   }
-  printf("DID WE GET HERE --%s\n", addition->filename);
+
   find = search(list,addition->filename);
-  printf("HOW ABOUT HERE\n");
+
   if(find>1){
     addition->freq=find;
   }
@@ -177,12 +177,23 @@ void printSL(EList list, int index){
     printf("SL is empty, cannot print\n");
     return;
   }
-  temp = (list.entrylist[index]).sl->head;
-  printf("SL for [%d] = %s\n",index,list.entrylist[index].word);
+  // temp = (list.entrylist[index]).sl->head;
+  int i =0;
+  for(;i<list.item_count;i++){
+    temp = (list.entrylist[i]).sl->head;
+    printf("SL for [%d] = %s\n",i,list.entrylist[i].word);
+    while(temp && temp->filename){
+      printf("temp: %s  %d\n",temp->filename,temp->freq);
+      temp=temp->next;
+    }
+      
+  }
+  /*  printf("SL for [%d] = %s\n",index,list.entrylist[index].word);
   while(temp && temp->filename){
     printf("%s  %d\n",temp->filename,temp->freq);
     temp=temp->next;
   }
+  */
 }
 
 void freeSL(EList list, int index){

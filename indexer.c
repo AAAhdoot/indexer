@@ -60,8 +60,12 @@ void filesave(EList list, char* output_file){
   fprintf(fp, "{\"list\" : [\n");
   for(i=0;i<list.item_count;i++){
     fprintf(fp, "         {\"%s\" : [ \n", list.entrylist[i].word); //would be the word you are talking about
-    curr = list.entrylist[i].sl->head;
+    curr = (list.entrylist[i]).sl->head;
+    // printSL(list,i);
+    // printf("WHEE: %s\n", curr->filename);
     while(curr&&curr->filename){
+      printf("curr->filename: %s\n", curr->filename);
+      //no more Occurrences, no comma
       if(!(curr->next)){
 	fprintf(fp, "                  {\"%s\" : %d}\n",curr->filename, curr->freq); //filepath 1 with frequency 1
       }
@@ -112,7 +116,7 @@ int main(int argc, char **argv){
   }
 
   initList(&list);
-  setListSize(&list,5);
+  setListSize(&list,200);
   if(!(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
     
     tokenization(givendoc,&list);
@@ -122,15 +126,23 @@ int main(int argc, char **argv){
     enterdir(givendoc,&list);
   }
     
-  int z=0;
+  /* int z=0;
   for(;z<list.item_count;z++){
     printSL(list,z);
   }
+  */
+
   printf("\n");
   printList(list);
   qsort(list.entrylist,list.item_count,sizeof(Entry),compareWords);
   printList(list);
   printf("item_count: %d\n", list.item_count);
+
+  /*  int z=0;
+  for(;z<list.item_count;z++){
+    printSL(list,z);
+    }*/
+  printSL(list,0);
   filesave(list, argv[1]);
 
   return 0;
