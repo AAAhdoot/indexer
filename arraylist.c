@@ -17,8 +17,7 @@ void setListSize(EList* list, int size){
   list->size = size; 
   list->item_count=0;
   list->entrylist = malloc(size*sizeof(Entry));
-  //list->entrylist=e;
-  printf("set size: %d\n", list->size);
+  //  printf("set size: %d\n", list->size);
   int i=0;
   for(;i<list->size;i++){
     list->entrylist[i].word=NULL;
@@ -39,21 +38,32 @@ char* getListItem(EList list, int index){
 
 //insert an item into the list
 int insertListItem(EList* list, char* filename, char* word, char* directory){
+  printf("INSERT!!\n");
+  if(!filename||!directory){
+    printf("Invalid Argument\n");
+    return 0;
+  }
   int len = strlen(word);
   //  printf("%d  %d\n", list->item_count, list->size); 
   int exists = existsInList(list,filename,word,directory);
   //Particular Case: new word that does not exist in the arraylist
-  if(exists==0){
     if(list->item_count>=list->size){
-      int new_size=(2*list->size)+1;
+      int new_size=2*list->size;
       printf("Out of bounds, call resize(list, %d)\n", new_size);
       resize(list,new_size);
     }
 
+  if(exists==0){
+    /*if(list->item_count>=list->size){
+      int new_size=(2*list->size)+1;
+      printf("Out of bounds, call resize(list, %d)\n", new_size);
+      resize(list,new_size);
+      }*/
+
     (list->entrylist[ list->item_count ]).word=malloc((len+1)*sizeof(char*));
 
     strcpy((list->entrylist[ list->item_count ].word),word);
-    //list->item_count++;
+
     (list->entrylist[ list->item_count]).sl = malloc(1*sizeof(OccList));
     (list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
     (list->entrylist[ list->item_count]).sl->head->freq = 1;
@@ -68,17 +78,17 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
 
 //look for a word in the list of words
 int existsInList(EList* list, char* filename, char* word, char* directory){
-  printf("search for: %s\n",word);
+  //  printf("search for: %s\n",word);
   int i=0;
   for(; i < list->size; i++){
     if(list->entrylist[i].word!=NULL && strcmp(word,(list->entrylist[i]).word)==0){
       printf("Already in list! Adding to SL[%d]\n", i);
-      SLInsert(list->entrylist[i].sl,filename, directory);
+       SLInsert(list->entrylist[i].sl,filename, directory);
       
       return 1;
     }
   }
-  printf("Not in list\n");
+  // printf("Not in list\n");
  
   return 0;
 }
@@ -105,7 +115,7 @@ void resize(EList* list, int new_size){
   Entry* temp = realloc(list->entrylist,new_size*sizeof(Entry));
  
   if (temp==NULL){
-    printf("ERROR: CAN'T RESIZE, EATING SHIT\n");
+    printf("ERROR: CAN'T RESIZE\n");
     return ;
   }
   int j=list->size;

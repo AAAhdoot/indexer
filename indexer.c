@@ -1,4 +1,5 @@
 #include "indexer.h"
+#include "arraylist.h"
 #include "tokenizer.c"
 
 void enterdir(String pathname){
@@ -31,7 +32,8 @@ void enterdir(String pathname){
 	continue;
       }
       fclose(fp);
-      tokenization(ptr->d_name);
+      //not dealing with tokenizing dirs now
+      //     tokenization(ptr->d_name);
       chdir("..");
     }
     else if(ptr->d_type == 4){
@@ -70,7 +72,7 @@ int main(int argc, char **argv){
   FILE * fp;
   FILE *write;
   char x;
-  EList arraylist;
+  EList list;
   givendoc = argv[2];
   futurefile = argv[1];
   if(argc!=3 || !givendoc || !futurefile){
@@ -78,18 +80,23 @@ int main(int argc, char **argv){
     printf("%s\n", strerror( errno ));
     exit(0);
   }
-
+  initList(&list);
+  setListSize(&list,5);
   if(  !(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
     
-    tokenization(givendoc);
+    tokenization(givendoc,&list);
     //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
   }
   else{
     enterdir(givendoc);
   }
     
-
-
+  int z=0;
+  for(;z<list.item_count;z++){
+    printSL(list,z);
+  }
+  printf("\n");
+  printList(list);
 
   return 0;
 }

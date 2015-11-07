@@ -173,7 +173,7 @@ void printSL(EList list, int index){
     return;
   }
   temp = (list.entrylist[index]).sl->head;
-  printf("SL for [%d]\n",index);
+  printf("SL for [%d] = %s\n",index,list.entrylist[index].word);
   while(temp){
     printf("%s  %d\n",temp->filename,temp->freq);
     temp=temp->next;

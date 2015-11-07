@@ -1,18 +1,20 @@
 #include "tokenizer.h"
+#include "arraylist.c"
 
-String Lower(String word){
+String Lower(String word, EList* list){
   long int i;
   for(i=0;i<strlen(word);i++){
     if(isalpha(word[i])){
       word[i] = tolower(word[i]);
     }
   }
+  insertListItem(list,"f1",word,"d1");
   //  printf("lower?: %s\n", word);
   return word;
 }
 
 
-FILE *word(FILE *fp){
+FILE *word(FILE *fp, EList* list){
   int i;
   String word;
   FILE * current;
@@ -46,7 +48,7 @@ FILE *word(FILE *fp){
   word[count] = '\0';
   //printf("word[count] is %c\n",word[count]);
   //printf("homedawg, word currently is %s\n",word);
-  printf("%s\n",Lower(word));
+  printf("%s\n",Lower(word,list));
   //end = current;
   //fseek(fp,count,SEEK_CUR);
   //printf("word: %s\n",word);
@@ -56,7 +58,7 @@ FILE *word(FILE *fp){
 
 
 
-void tokenization( String pathname) {
+void tokenization( String pathname, EList* list) {
   int count;
   FILE *fp = fopen(pathname,"r");
   FILE *start;
@@ -67,7 +69,7 @@ void tokenization( String pathname) {
     if(isalpha(x)!=0){
       //printf("%c is an alpha\n",x);
       fseek(current,-1,SEEK_CUR);
-      current = word(current);
+      current = word(current,list);
       
     }
     // else{

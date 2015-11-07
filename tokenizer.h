@@ -7,11 +7,12 @@
 #include <stdlib.h>
 #include <stddef.h>
 
+#include "arraylist.h"
 //typedef char* String;
 
-FILE* word(FILE* fp);
-String Lower(char* word);
-void tokenization(char* pathname);
+FILE* word(FILE* fp, EList* list);
+String Lower(char* word, EList* list);
+void tokenization(char* pathname, EList* list);
 
 
 
