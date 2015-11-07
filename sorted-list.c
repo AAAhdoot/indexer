@@ -97,6 +97,7 @@ int SLRemove(OccList* list, String filename, int freq){
 
 
 Occurrence* createOccurrence(char* filename, String directory){
+  //printf("CREATE: %s\n", filename);
   Occurrence* new = malloc(sizeof(Occurrence));
   //new->filename = malloc((strlen(directory)+strlen(filename)+2)*sizeof(char));
   new->filename = malloc((strlen(filename)+1)*sizeof(char));

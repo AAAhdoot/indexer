@@ -38,21 +38,23 @@ char* getListItem(EList list, int index){
 
 //insert an item into the list
 int insertListItem(EList* list, char* filename, char* word, char* directory){
-  printf("INSERT!!\n");
+  printf("INSERT!!: %s \n", filename);
   if(!filename||!directory){
     printf("Invalid Argument\n");
     return 0;
   }
   int len = strlen(word);
   //  printf("%d  %d\n", list->item_count, list->size); 
-  int exists = existsInList(list,filename,word,directory);
+    int exists = existsInList(list,filename,word,directory);
   //Particular Case: new word that does not exist in the arraylist
-    if(list->item_count>=list->size){
+
+    /*    if(list->item_count>=list->size){
       int new_size=2*list->size;
       printf("Out of bounds, call resize(list, %d)\n", new_size);
       resize(list,new_size);
     }
-
+    */
+//int exists = existsInList(list,filename,word,directory);
   if(exists==0){
     /*if(list->item_count>=list->size){
       int new_size=(2*list->size)+1;
@@ -71,6 +73,11 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
     strcpy((list->entrylist[ list->item_count]).sl->head->filename,filename);
     list->item_count++;
   }
+if(list->item_count>=list->size){
+      int new_size=2*list->size;
+      printf("Out of bounds, call resize(list, %d)\n", new_size);
+      resize(list,new_size);
+    }
   
   return 1;
 

@@ -32,6 +32,10 @@ Occurrence* createOccurrence(char* filename, char* directory);
 
 int search(OccList* list, char* filename);
 
-int compareOcc(Occurrence* occ1, Occurrence* occ2);
+//there's something up with the definition of OccCompare, seems not used?
+
+//int OccCompare(Occurrence* occ1, Occurrence* occ2);
+
+//int OccCompare(String filename, int freq, Occurrence * occ);
 
 #endif

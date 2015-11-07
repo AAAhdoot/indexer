@@ -2,7 +2,7 @@
 #include "arraylist.h"
 #include "tokenizer.c"
 
-void enterdir(String pathname){
+void enterdir(String pathname, EList* list){
   EntryPtr ptr;
   DIR* pdir;
   FILE * fp;
@@ -16,10 +16,10 @@ void enterdir(String pathname){
     if (strcmp(ptr->d_name,".") == 0 || strcmp(ptr->d_name,"..") == 0){
       continue;
     }
-    printf("[%s]\n",ptr->d_name);
-    printf("%zu\n",ptr->d_ino);
-    printf("%zu\n",ptr->d_off);
-    printf("%u\n",ptr->d_type);
+    printf("d_name: [%s]\n",ptr->d_name);
+    printf("d_ino: %zu\n",ptr->d_ino);
+    printf("d_off: %zu\n",ptr->d_off);
+    printf("d_type: %u\n",ptr->d_type);
     if(ptr->d_type == 8){
       chdir(pathname);
       fp = fopen(ptr->d_name,"r");
@@ -32,13 +32,13 @@ void enterdir(String pathname){
 	continue;
       }
       fclose(fp);
-      //not dealing with tokenizing dirs now
-      //     tokenization(ptr->d_name);
+   
+      tokenization(ptr->d_name,list);
       chdir("..");
     }
     else if(ptr->d_type == 4){
       chdir(pathname);
-      enterdir(ptr->d_name);
+      enterdir(ptr->d_name,list);
       chdir("..");
     }
     else{
@@ -49,11 +49,11 @@ void enterdir(String pathname){
   return;
 
 }
-
-
-void filesave(){
+//Needs to be functional
+//We need to save the file path at each level for printing to file
+void filesave(char* output_file){
   FILE *fp;
-  fp = fopen("finale.txt","w+");
+  fp = fopen(output_file,"w+");
   fprintf(fp, "{\"list\" : [\n");
   fprintf(fp, "         {\"a\" : [ \n");
   fprintf(fp, "                  {\"baa\" : 1},\n");
@@ -63,6 +63,14 @@ void filesave(){
 
 }
 
+int compareWords(const void* a, const void* b) {
+  /*  char* aa = *(Entry*)a->word;
+  char* bb = *(Entry*)b->word;
+  */
+  Entry aa = *(Entry*)a; 
+  Entry bb = *(Entry*)b; 
+  return strcmp(aa.word,bb.word);
+}
 
 int main(int argc, char **argv){
   String givendoc; 
@@ -80,15 +88,16 @@ int main(int argc, char **argv){
     printf("%s\n", strerror( errno ));
     exit(0);
   }
+
   initList(&list);
   setListSize(&list,5);
-  if(  !(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
+  if(!(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
     
     tokenization(givendoc,&list);
     //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
   }
   else{
-    enterdir(givendoc);
+    enterdir(givendoc,&list);
   }
     
   int z=0;
@@ -97,6 +106,9 @@ int main(int argc, char **argv){
   }
   printf("\n");
   printList(list);
+  qsort(list.entrylist,list.item_count,sizeof(Entry),compareWords);
+  printList(list);
+  // filesave(argv[1]);
 
   return 0;
 }
