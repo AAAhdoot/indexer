@@ -71,13 +71,18 @@ int insertListItem(EList* list, char* filename, char* word, char* directory){
     (list->entrylist[ list->item_count]).sl = malloc(1*sizeof(OccList));
     // (list->entrylist[ list->item_count]).sl->head = createOccurrence("file1","directory1");
 
-     (list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
-    
+    //(list->entrylist[ list->item_count]).sl->head=malloc(1*sizeof(Occurrence));
+    (list->entrylist[ list->item_count]).sl->head=NULL; 
+    /*   
     (list->entrylist[ list->item_count]).sl->head->freq = 1;
     (list->entrylist[ list->item_count]).sl->head->filename = malloc((strlen(filename)+1)*sizeof(char));
     strcpy((list->entrylist[ list->item_count]).sl->head->filename,filename);
-    
-    // SLInsert((list->entrylist[list->item_count]).sl,"file1","direct1");
+    */
+
+    SLInsert((list->entrylist[list->item_count]).sl,"file1","direct1");
+    if(list->item_count==10){
+      printList(*list);
+    }
     
     list->item_count++;
   }
@@ -97,7 +102,7 @@ int existsInList(EList* list, char* filename, char* word, char* directory){
   int i=0;
   for(; i < list->size; i++){
     if(list->entrylist[i].word!=NULL && strcmp(word,(list->entrylist[i]).word)==0){
-      printf("Already in list! Adding to SL[%d]\n", i);
+      printf("%s: Already in list! Adding to SL[%d]\n",list->entrylist[i].word, i);
        SLInsert(list->entrylist[i].sl,filename, directory);
       
       return 1;

@@ -18,7 +18,7 @@ int SLInsert(OccList* list, String filename, String directory){
   /*empty list addition case*/
   addition = createOccurrence(filename,directory);
   if(!curr){
-    printf("P1\n");
+    printf("P1 HEAD IS NULL--CREATE HEAD\n");
     list->head = addition;
     addition->next = NULL;
     return 1;
@@ -37,7 +37,9 @@ int SLInsert(OccList* list, String filename, String directory){
     list->head = addition;
     return 1;
   }
+  printf("DID WE GET HERE --%s\n", addition->filename);
   find = search(list,addition->filename);
+  printf("HOW ABOUT HERE\n");
   if(find>1){
     addition->freq=find;
   }
@@ -135,6 +137,7 @@ int search(OccList* list, String filename){
     if(strcmp(curr->filename,filename)==0){
       return curr->freq + 1;
 	}
+    curr=curr->next;
   }
   return 0;
 }
