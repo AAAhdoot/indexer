@@ -1,7 +1,7 @@
 //ArrayList structure for list of words and list of occurrences
 
 #include "arraylist.h"
-#include "sorted-list.c"
+#include "sorted-list.h"
 
 //initialize the list of entries i.e. our recorded words
 void initList(EList* list){

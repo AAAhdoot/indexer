@@ -1,6 +1,7 @@
 #include "indexer.h"
 #include "arraylist.h"
-#include "tokenizer.c"
+#include "tokenizer.h"
+#include "sorted-list.h"
 
 void enterdir(String pathname, EList* list){
   EntryPtr ptr;
@@ -8,7 +9,7 @@ void enterdir(String pathname, EList* list){
   FILE * fp;
   char x;
   pdir = opendir(pathname);
-  char* currentdir = malloc(51*sizeof(char));
+  char* currentdir = malloc(101*sizeof(char));
   if(!pdir){
     return;
   }
@@ -35,7 +36,7 @@ void enterdir(String pathname, EList* list){
 	continue;
       }
       fclose(fp);
-      getcwd(currentdir,50);
+      getcwd(currentdir,100);
       tokenization(ptr->d_name,list,currentdir);
       chdir("..");
     }

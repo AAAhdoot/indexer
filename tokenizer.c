@@ -1,5 +1,5 @@
 #include "tokenizer.h"
-#include "arraylist.c"
+#include "arraylist.h"
 
 String Lower(String word, EList* list, char* filename, char* currentdir){
   long int i;
