@@ -46,7 +46,7 @@ void resize(EList* list, int new_size);
 
 void addToSL(EList* list, int index, const char* filename); 
 
-void printSL(EList list, int index, char* filename); 
+void printSL(EList list, int index); 
 
 void freeSL(EList list, int index); 
 

@@ -1,21 +1,21 @@
 #include "tokenizer.h"
 #include "arraylist.c"
 
-String Lower(String word, EList* list, char* filename){
+String Lower(String word, EList* list, char* filename, char* currentdir){
   long int i;
   for(i=0;i<strlen(word);i++){
     if(isalpha(word[i])){
       word[i] = tolower(word[i]);
     }
   }
-  //printf("IS THIS PASSING TO INSERT?: %s\n",filename);
-  insertListItem(list,filename,word,"d1");
-  //  printf("lower?: %s\n", word);
+
+  insertListItem(list,filename,word,currentdir);
+
   return word;
 }
 
 
-FILE *word(FILE *fp, EList* list, char* filename){
+FILE *word(FILE *fp, EList* list, char* filename, char* currentdir){
   int i;
   String word;
   FILE * current;
@@ -27,9 +27,9 @@ FILE *word(FILE *fp, EList* list, char* filename){
   start = fp;
   count = 0;
 
-  // printf("IS THIS GETING PASSED?-----%s\n", filename);
+
   while((x=fgetc(fp))!=EOF){
-    //printf("in word, character currently is %c and count is %d\n",x,count);
+
     if(isalnum(x)!=0){
       count++;
     }
@@ -37,9 +37,9 @@ FILE *word(FILE *fp, EList* list, char* filename){
       break;
     }
   }
-  //printf("count currently is %d\n",count);
+
   fseek(fp,-count-1,SEEK_CUR);
-  //count++;
+
   //fseek(current,-1,SEEK_CURR);
   word  = (String)malloc((count+1)*sizeof(char));
   for(i=0;i<count;i++){
@@ -47,10 +47,8 @@ FILE *word(FILE *fp, EList* list, char* filename){
     //printf("we have just stored %c\n",word[i]);
   }
   word[count] = '\0';
-  //printf("word[count] is %c\n",word[count]);
-  //printf("homedawg, word currently is %s\n",word);
-  printf("%s\n",Lower(word,list, filename));
-  //end = current;
+  Lower(word,list, filename,currentdir);
+  // printf("%s\n",Lower(word,list, filename,currentdir));
   //fseek(fp,count,SEEK_CUR);
   //printf("word: %s\n",word);
   free(word);
@@ -59,7 +57,7 @@ FILE *word(FILE *fp, EList* list, char* filename){
 
 
 
-void tokenization( String filename, EList* list) {
+void tokenization( String filename, EList* list, char* currentdir) {
   int count;
   FILE *fp = fopen(filename,"r");
   // printf("NAME----------: %s\n",filename);
@@ -71,7 +69,7 @@ void tokenization( String filename, EList* list) {
     if(isalpha(x)!=0){
       //printf("%c is an alpha\n",x);
       fseek(current,-1,SEEK_CUR);
-      current = word(current,list,filename);
+      current = word(current,list,filename,currentdir);
       
     }
     // else{

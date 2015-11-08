@@ -1,29 +1,87 @@
 {"list" : [
          {"apples" : [ 
-                  {"test.txt" : 2},
-                  {"name.txt" : 1},
-                  {"fun.txt" : 1}
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test.txt" : 2},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/fun.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/name.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
          ]},
          {"bananas" : [ 
-                  {"test.txt" : 1},
-                  {"name.txt" : 1},
-                  {"fun.txt" : 1}
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/fun.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/name.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test.txt" : 1}
          ]},
          {"bears" : [ 
-                  {"test.txt" : 1},
-                  {"name.txt" : 1},
-                  {"fun.txt" : 1}
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/fun.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/name.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test.txt" : 1}
+         ]},
+         {"cadillac" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"casa" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
          ]},
          {"cat" : [ 
-                  {"test.txt" : 1},
-                  {"name.txt" : 1},
-                  {"fun.txt" : 1}
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/fun.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/name.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test.txt" : 1}
+         ]},
+         {"cats" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
          ]},
          {"doodle" : [ 
-                  {"test.txt" : 1},
-                  {"fun.txt" : 3},
-                  {"fun.txt" : 2},
-                  {"name.txt" : 1},
-                  {"fun.txt" : 1}
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/fun.txt" : 3},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 2},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/name.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test.txt" : 1}
+         ]},
+         {"ducks" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"giraffe" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"green" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"hippo" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"huevos" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"lion" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"mcdonalds" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
+         ]},
+         {"mi" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"pirates" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"ramps" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"rancheros" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"signals" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"sport" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"tea" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"tomato" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1}
+         ]},
+         {"zebra" : [ 
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test2.txt" : 1},
+                  {"/.autofs/ilab/ilab_users/en140/pa4/dir1/test3.txt" : 1}
          ]}
 ]}

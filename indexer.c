@@ -8,6 +8,7 @@ void enterdir(String pathname, EList* list){
   FILE * fp;
   char x;
   pdir = opendir(pathname);
+  char* currentdir = malloc(51*sizeof(char));
   if(!pdir){
     return;
   }
@@ -16,10 +17,12 @@ void enterdir(String pathname, EList* list){
     if (strcmp(ptr->d_name,".") == 0 || strcmp(ptr->d_name,"..") == 0){
       continue;
     }
-    printf("d_name: [%s]\n",ptr->d_name);
+    /*   printf("d_name: [%s]\n",ptr->d_name);
     printf("d_ino: %zu\n",ptr->d_ino);
     printf("d_off: %zu\n",ptr->d_off);
     printf("d_type: %u\n",ptr->d_type);
+    */
+
     if(ptr->d_type == 8){
       chdir(pathname);
       fp = fopen(ptr->d_name,"r");
@@ -32,8 +35,8 @@ void enterdir(String pathname, EList* list){
 	continue;
       }
       fclose(fp);
-   
-      tokenization(ptr->d_name,list);
+      getcwd(currentdir,50);
+      tokenization(ptr->d_name,list,currentdir);
       chdir("..");
     }
     else if(ptr->d_type == 4){
@@ -88,9 +91,7 @@ void filesave(EList list, char* output_file){
 }
 
 int compareWords(const void* a, const void* b) {
-  /*  char* aa = *(Entry*)a->word;
-  char* bb = *(Entry*)b->word;
-  */
+ 
   Entry aa = *(Entry*)a; 
   Entry bb = *(Entry*)b; 
   return strcmp(aa.word,bb.word);
@@ -115,32 +116,29 @@ int main(int argc, char **argv){
 
   initList(&list);
   setListSize(&list,200);
-  if(!(pdir=opendir(givendoc)) && (fp=fopen(givendoc,"r"))){
-    
-    tokenization(givendoc,&list);
+  pdir=opendir(givendoc);
+  fp=fopen(givendoc,"r");
+  if(!pdir && fp){
+    fclose(fp);
+    tokenization(givendoc,&list,NULL);
     //closedir(pdir); DO I NEED TO CLOSE THIS AND THE FILE POINTER?
   }
+  else if(!pdir && !fp){
+    errno = ENOENT;
+    printf("%s\n", strerror( errno ));
+    exit(0);
+  }
   else{
+    closedir(pdir);
     enterdir(givendoc,&list);
   }
     
-  /* int z=0;
-  for(;z<list.item_count;z++){
-    printSL(list,z);
-  }
-  */
 
-  printf("\n");
-  printList(list);
   qsort(list.entrylist,list.item_count,sizeof(Entry),compareWords);
-  printList(list);
-  printf("item_count: %d\n", list.item_count);
+  //printList(list);
+  //  printf("item_count: %d\n", list.item_count);
 
-  /*  int z=0;
-  for(;z<list.item_count;z++){
-    printSL(list,z);
-    }*/
-  //printSL(list,0,argv[1]);
+
   filesave(list, argv[1]);
 
   return 0;
